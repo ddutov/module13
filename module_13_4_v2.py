@@ -27,7 +27,7 @@
 Эта функция должна обновлять данные в состоянии weight на message.text (написанное пользователем сообщение).
 Используйте метод update_data.
 Далее в функции запомните в переменную data все ранее введённые состояния при помощи state.get_data().
-Используйте упрощённую формулу Миффлина - Сан-Жеора для подсчёта нормы калорий.
+Используйте упрощённую формулу Миффлина-Сан Жеора для подсчёта нормы калорий.
 Данные для формулы берите из ранее объявленной переменной data по ключам age, growth и weight соответственно.
 Результат вычисления по формуле отправьте ответом пользователю в Telegram-бот.
 Финишируйте машину состояний методом finish().
@@ -78,22 +78,22 @@ async def set_weight(message, state):
 
 
 @dp.message_handler(state=UserState.weight)
-async def send_calories(message, state):
+async def send_sex(message, state):
     await state.update_data(weight=message.text)
     await message.answer('Введите свой пол: F - для женщин или M - для мужчин ')
     await UserState.sex.set()
 
 
 @dp.message_handler(state=UserState.sex)
-async def set_weight(message, state):
+async def set_calories(message, state):
     await state.update_data(sex=message.text)
     data = await state.get_data()
     if message.text == "M":
-        # (weight * 10) + (6.25 * growth) - (5 * age) + 5 формулу Миффлина - Сан-Жеора для подсчёта нормы калорий для
+        # (weight * 10) + (6.25 * growth) - (5 * age) + 5 формулу Миффлина-Сан Жеора для подсчёта нормы калорий для
         # мужчин
         result = (float(data['weight']) * 10) + (float(data['growth']) * 6.25) - (float(data['age']) * 5) + 5
     elif message.text == "F":
-        # (weight * 10) + (6.25 * growth) - (5 * age) + 5 формулу Миффлина - Сан-Жеора для подсчёта нормы калорий для
+        # (weight * 10) + (6.25 * growth) - (5 * age) + 5 формулу Миффлина-Сан Жеора для подсчёта нормы калорий для
         # женщин
         result = (float(data['weight']) * 10) + (float(data['growth']) * 6.25) - (float(data['age']) * 5) - 161
     await message.answer(f'Ваша норма калорий {result}')
