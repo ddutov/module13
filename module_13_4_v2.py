@@ -88,11 +88,11 @@ async def send_sex(message, state):
 async def set_calories(message, state):
     await state.update_data(sex=message.text)
     data = await state.get_data()
-    if message.text == "M":
+    if message.text == "M" or message.text == "m":
         # (weight * 10) + (6.25 * growth) - (5 * age) + 5 формулу Миффлина-Сан Жеора для подсчёта нормы калорий для
         # мужчин
         result = (float(data['weight']) * 10) + (float(data['growth']) * 6.25) - (float(data['age']) * 5) + 5
-    elif message.text == "F":
+    elif message.text == "F" or message.text == "f": 
         # (weight * 10) + (6.25 * growth) - (5 * age) + 5 формулу Миффлина-Сан Жеора для подсчёта нормы калорий для
         # женщин
         result = (float(data['weight']) * 10) + (float(data['growth']) * 6.25) - (float(data['age']) * 5) - 161
